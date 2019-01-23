@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7497D547-129A-4CBE-812B-4BB807608A40}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MemoryWPF</RootNamespace>
+    <AssemblyName>MemoryWPF</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>brain_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controls\Card.xaml.cs">
+      <DependentUpon>Card.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CardDeck.xaml.cs">
+      <DependentUpon>CardDeck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameFinishedMessage.xaml.cs">
+      <DependentUpon>GameFinishedMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BoolToBtnTxtConverter.cs" />
+    <Compile Include="Converters\InvertBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\LanguageToFlagConverter.cs" />
+    <Compile Include="Converters\LanguageToMessageConverter.cs" />
+    <Compile Include="Converters\LanguageToStringConverter.cs" />
+    <Compile Include="Converters\ThemeAndIdToImageConverter.cs" />
+    <Compile Include="Converters\ThemeAndIdToNameConverter.cs" />
+    <Compile Include="Converters\ThemeToColorConverter.cs" />
+    <Compile Include="Converters\ThemeToStringConverter.cs" />
+    <Compile Include="Converters\ThemeToVisibilityConverter.cs" />
+    <Compile Include="Converters\TimeSpanToSecondsConverter.cs" />
+    <Compile Include="Converters\ZeroToDashConverter.cs" />
+    <Compile Include="DataHelpers\CardData.cs" />
+    <Compile Include="DataHelpers\CurrentGameData.cs" />
+    <Compile Include="DataHelpers\DataObjectBase.cs" />
+    <Compile Include="DataHelpers\GameData.cs" />
+    <Compile Include="DataHelpers\ScoresManager.cs" />
+    <Compile Include="DataHelpers\ThemeObject.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="UserSettings.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="Controls\Card.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CardDeck.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\GameFinishedMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RankingData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="brain_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Wild_Animals\wild_animals_bear.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_elephant.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_gazelle.png" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_giraffe.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_gorilla.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_hippo.png" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_lion.png" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_orca.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_panda.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_penguin.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_tiger.jpg" />
+    <Resource Include="Resources\Wild_Animals\wild_animals_zebra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Farm_Animals\farm_animals_cat.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_chicken.jpg" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_cow.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_dog.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_donkey.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_duck.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_goat.jpg" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_goose.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_horse.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_pig.png" />
+    <Resource Include="Resources\Farm_Animals\farm_animals_rabbit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cities\cities_agra.png" />
+    <Resource Include="Resources\Cities\cities_barcelona.png" />
+    <Resource Include="Resources\Cities\cities_dubai.png" />
+    <Resource Include="Resources\Cities\cities_london.jpg" />
+    <Resource Include="Resources\Cities\cities_moscow.png" />
+    <Resource Include="Resources\Cities\cities_newyork.png" />
+    <Resource Include="Resources\Cities\cities_paris.jpg" />
+    <Resource Include="Resources\Cities\cities_riodejaneiro.png" />
+    <Resource Include="Resources\Cities\cities_rome.png" />
+    <Resource Include="Resources\Cities\cities_sanfrancisco.png" />
+    <Resource Include="Resources\Cities\cities_sydney.png" />
+    <Resource Include="Resources\Cities\cities_zagreb.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Singers\singers_adele.png" />
+    <Resource Include="Resources\Singers\singers_beyonce.png" />
+    <Resource Include="Resources\Singers\singers_enriqueiglesias.png" />
+    <Resource Include="Resources\Singers\singers_freddiemercury.png" />
+    <Resource Include="Resources\Singers\singers_justinbieber.png" />
+    <Resource Include="Resources\Singers\singers_justintimberlake.png" />
+    <Resource Include="Resources\Singers\singers_madonna.png" />
+    <Resource Include="Resources\Singers\singers_michaeljackson.png" />
+    <Resource Include="Resources\Singers\singers_rihanna.png" />
+    <Resource Include="Resources\Singers\singers_selenagomez.png" />
+    <Resource Include="Resources\Singers\singers_shakira.png" />
+    <Resource Include="Resources\Singers\singers_snoopdogg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Actors\actors_angelinajolie.png" />
+    <Resource Include="Resources\Actors\actors_annehathaway.png" />
+    <Resource Include="Resources\Actors\actors_bradpitt.png" />
+    <Resource Include="Resources\Actors\actors_christianbale.png" />
+    <Resource Include="Resources\Actors\actors_emmawatson.png" />
+    <Resource Include="Resources\Actors\actors_georgeclooney.png" />
+    <Resource Include="Resources\Actors\actors_jimcarrey.png" />
+    <Resource Include="Resources\Actors\actors_juliaroberts.png" />
+    <Resource Include="Resources\Actors\actors_leonardodicaprio.png" />
+    <Resource Include="Resources\Actors\actors_natalieportman.png" />
+    <Resource Include="Resources\Actors\actors_rowanatkinson.png" />
+    <Resource Include="Resources\Actors\actors_tomhanks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Instruments\instruments_accordion.png" />
+    <Resource Include="Resources\Instruments\instruments_cello.png" />
+    <Resource Include="Resources\Instruments\instruments_clarinet.png" />
+    <Resource Include="Resources\Instruments\instruments_drum.png" />
+    <Resource Include="Resources\Instruments\instruments_flute.png" />
+    <Resource Include="Resources\Instruments\instruments_guitar.png" />
+    <Resource Include="Resources\Instruments\instruments_harp.png" />
+    <Resource Include="Resources\Instruments\instruments_piano.png" />
+    <Resource Include="Resources\Instruments\instruments_saxophone.png" />
+    <Resource Include="Resources\Instruments\instruments_triangle.png" />
+    <Resource Include="Resources\Instruments\instruments_trumpet.png" />
+    <Resource Include="Resources\Instruments\instruments_violin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Sports\sports_basketball.png" />
+    <Resource Include="Resources\Sports\sports_boxing.png" />
+    <Resource Include="Resources\Sports\sports_cycling.png" />
+    <Resource Include="Resources\Sports\sports_football.png" />
+    <Resource Include="Resources\Sports\sports_golf.png" />
+    <Resource Include="Resources\Sports\sports_highjump.png" />
+    <Resource Include="Resources\Sports\sports_iceskating.png" />
+    <Resource Include="Resources\Sports\sports_running.png" />
+    <Resource Include="Resources\Sports\sports_skiing.png" />
+    <Resource Include="Resources\Sports\sports_tennis.png" />
+    <Resource Include="Resources\Sports\sports_volleyball.png" />
+    <Resource Include="Resources\Sports\sports_waterpolo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Farm_Animals\farm_animals_sheep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CRO_Flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\UK_Flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Math\math_absolute.png" />
+    <Resource Include="Resources\Math\math_cosine.png" />
+    <Resource Include="Resources\Math\math_cotangent.png" />
+    <Resource Include="Resources\Math\math_cubed.png" />
+    <Resource Include="Resources\Math\math_exponential.png" />
+    <Resource Include="Resources\Math\math_identity.png" />
+    <Resource Include="Resources\Math\math_naturallogarithm.png" />
+    <Resource Include="Resources\Math\math_reciprocal.png" />
+    <Resource Include="Resources\Math\math_sine.png" />
+    <Resource Include="Resources\Math\math_squared.png" />
+    <Resource Include="Resources\Math\math_squareroot.png" />
+    <Resource Include="Resources\Math\math_tangent.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

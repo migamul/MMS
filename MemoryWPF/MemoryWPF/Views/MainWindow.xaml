@@ -1,0 +1,192 @@
+﻿<Window x:Class="MemoryWPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MemoryWPF"
+        xmlns:vm="clr-namespace:MemoryWPF.ViewModels"
+        xmlns:controls="clr-namespace:MemoryWPF.Controls"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Memory" 
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        SizeChanged="Window_SizeChanged"
+        Background="Bisque">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="TableHeader">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="TableCell">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
+        <sys:Int32 x:Key="NameLabel">0</sys:Int32>
+        <sys:Int32 x:Key="ThemeLabel">1</sys:Int32>
+        <sys:Int32 x:Key="NumberOfPairsLabel">2</sys:Int32>
+        <sys:Int32 x:Key="StartButton">3</sys:Int32>
+        <sys:Int32 x:Key="TableHeaderRank">4</sys:Int32>
+        <sys:Int32 x:Key="TableHeaderName">5</sys:Int32>
+        <sys:Int32 x:Key="TableHeaderTime">6</sys:Int32>
+        <sys:Int32 x:Key="TableHeaderPairsOpened">7</sys:Int32>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="10 10 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45"/>  <!-- 0. Name: -->
+                <ColumnDefinition Width="100"/> <!-- 1. Guest -->
+                <ColumnDefinition Width="10"/> <!-- 2. razmak -->
+                <ColumnDefinition Width="50"/> <!-- 3. Theme: -->
+                <ColumnDefinition Width="110"/> <!-- 4. Combo Theme -->
+                <ColumnDefinition Width="10"/> <!-- 5. razmak -->
+                <ColumnDefinition Width="100"/> <!-- 6. Number of pairs: -->
+                <ColumnDefinition Width="40"/> <!-- 7. Combo pairs -->
+                <ColumnDefinition Width="15"/> <!-- 8. razmak -->
+                <ColumnDefinition Width="50"/> <!-- 9. Start button-->
+                <ColumnDefinition Width="15"/> <!-- 10. razmak -->
+                <ColumnDefinition Width="100"/> <!-- 11. Show scores button -->
+                <ColumnDefinition Width="15"/> <!-- 12. razmak -->
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/> <!-- 13. Change language button -->
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalAlignment="Right">
+                <Label.Content>
+                    <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                        <Binding Path="Language"/>
+                        <Binding Source="{StaticResource NameLabel}"/>
+                    </MultiBinding>
+                </Label.Content>
+            </Label>
+            <TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=PlayerName, Mode=TwoWay}"/>
+            <Label Grid.Column="3" HorizontalAlignment="Right">
+                <Label.Content>
+                    <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                        <Binding Path="Language"/>
+                        <Binding Source="{StaticResource ThemeLabel}"/>
+                    </MultiBinding>
+                </Label.Content>
+            </Label>
+            <ComboBox Grid.Column="4" VerticalAlignment="Center" ItemsSource="{Binding Themes, Mode=OneWay}" 
+                      SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" DisplayMemberPath="{Binding Language}"/>
+            <Label Grid.Column="6" HorizontalAlignment="Right">
+                <Label.Content>
+                    <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                        <Binding Path="Language"/>
+                        <Binding Source="{StaticResource NumberOfPairsLabel}"/>
+                    </MultiBinding>
+                </Label.Content>
+            </Label>
+            <ComboBox Grid.Column="7" VerticalAlignment="Center" ItemsSource="{Binding PairCounts, Mode=TwoWay}"
+                      SelectedItem="{Binding SelectedPairCount, Mode=TwoWay}"/>
+            <Button Grid.Column="9" Height="22" Command="{Binding StartCommand}">
+                <Button.Content>
+                    <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                        <Binding Path="Language"/>
+                        <Binding Source="{StaticResource StartButton}"/>
+                    </MultiBinding>
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="11" Height="22" Command="{Binding ScoreCommand}">
+                <Button.Content>
+                    <MultiBinding Converter="{StaticResource BoolToBtnTxtConverter}">
+                        <Binding Path="Language"/>
+                        <Binding Path="ShowScores"/>
+                    </MultiBinding>
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="14" Height="22" Command="{Binding LanguageCommand}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Stretch="Fill" Source="{Binding Language, Converter={StaticResource LanguageToFlagConverter}}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.RowSpan="3">
+            <controls:CardDeck Theme="{Binding CurrentTheme, Mode=OneWay}" 
+                               PairCount="{Binding CurrentPairCount, Mode=OneWay}" />
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2">
+            <Grid Panel.ZIndex="2" HorizontalAlignment="Center" Background="SeaGreen"
+              Visibility="{Binding ShowScores, Mode=OneWay, Converter={StaticResource BoolToVis}}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Style="{StaticResource TableHeader}">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                            <Binding Path="Language"/>
+                            <Binding Source="{StaticResource TableHeaderRank}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Style="{StaticResource TableHeader}">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                            <Binding Path="Language"/>
+                            <Binding Source="{StaticResource TableHeaderName}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Column="2" Style="{StaticResource TableHeader}">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                            <Binding Path="Language"/>
+                            <Binding Source="{StaticResource TableHeaderTime}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Column="3" Style="{StaticResource TableHeader}" TextWrapping="Wrap" TextAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource LanguageToStringConverter}">
+                            <Binding Path="Language"/>
+                            <Binding Source="{StaticResource TableHeaderPairsOpened}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
+            <ItemsControl Panel.ZIndex="2" HorizontalAlignment="Center" Background="White"
+                      ItemsSource="{Binding RankList}" 
+                      Visibility="{Binding ShowScores, Mode=OneWay, Converter={StaticResource BoolToVis}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="DarkSeaGreen">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Style="{StaticResource TableCell}" Text="{Binding Path=Rank}"/>
+                            <TextBlock Grid.Column="1" Style="{StaticResource TableCell}" Text="{Binding Path=PlayerName}"/>
+                            <TextBlock Grid.Column="2" Style="{StaticResource TableCell}" Text="{Binding Path=Time, Converter={StaticResource TimeSpanToSecondsConverter}}"/>
+                            <TextBlock Grid.Column="3" Style="{StaticResource TableCell}" Text="{Binding Path=NumberOfPairsOpened, Converter={StaticResource ZeroToDashConverter}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,22 @@
+﻿<Application x:Class="MemoryWPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MemoryWPF"
+             xmlns:converters="clr-namespace:MemoryWPF.Converters"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <converters:InvertBoolToVisibilityConverter x:Key="InvertBoolToVisConverter"/>
+        <converters:ThemeToStringConverter x:Key="ThemeToStringConverter"/>
+        <converters:ThemeToColorConverter x:Key="ThemeToColorConverter"/>
+        <converters:ThemeAndIdToNameConverter x:Key="ThemeAndIdToNameConverter"/>
+        <converters:ThemeAndIdToImageConverter x:Key="ThemeAndIdToImageConverter"/>
+        <converters:TimeSpanToSecondsConverter x:Key="TimeSpanToSecondsConverter"/>
+        <converters:ZeroToDashConverter x:Key="ZeroToDashConverter"/>
+        <converters:BoolToBtnTxtConverter x:Key="BoolToBtnTxtConverter"/>
+        <converters:LanguageToStringConverter x:Key="LanguageToStringConverter"/>
+        <converters:LanguageToFlagConverter x:Key="LanguageToFlagConverter"/>
+        <converters:LanguageToMessageConverter x:Key="LanguageToMessageConverter"/>
+        <converters:ThemeToVisibilityConverter x:Key="ThemeToVisibilityConverter"/>
+    </Application.Resources>
+</Application>
